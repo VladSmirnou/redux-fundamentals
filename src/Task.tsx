@@ -1,14 +1,20 @@
 import { ChangeEvent } from 'react';
 import { useAppDispatch } from './hooks/use-app-dispatch';
 import { useAppSelector } from './hooks/use-app-selector';
-import { removeTask, selectTaskById, updateTaskStatus } from './tasksSlice';
+import { removeTask, setTaskColorTag, updateTaskStatus } from './tasksSlice';
+import { RootState } from './store';
+import { ColorSelector } from './ColorSelector';
 
 type Props = {
     taskId: number;
+    colors: Array<string>;
 };
 
+const selectTaskById = (state: RootState, taskId: number) =>
+    state.tasks.byId[taskId];
+
 export const Task = (props: Props) => {
-    const { taskId } = props;
+    const { taskId, colors } = props;
     const dispatch = useAppDispatch();
 
     const task = useAppSelector((state) => selectTaskById(state, taskId));
@@ -23,6 +29,10 @@ export const Task = (props: Props) => {
         );
     };
 
+    const setColorTag = (colorTag: string) => {
+        dispatch(setTaskColorTag({ taskId, colorTag }));
+    };
+
     return (
         <li>
             <input
@@ -32,9 +42,11 @@ export const Task = (props: Props) => {
             />
             <span>{task.title}</span>
             <button onClick={deleteTask}>X</button>
-            <select name="" id="">
-                <option value="">color</option>
-            </select>
+            <ColorSelector
+                colors={colors}
+                selectedColorTag={task.colorTag}
+                onSetColorTag={setColorTag}
+            />
         </li>
     );
 };

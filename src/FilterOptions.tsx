@@ -5,6 +5,7 @@ type Props = {
     filterByStatusValue: FilterByStatusValues;
     filterByColorTagValues: FilterColorTagValue;
     onSetFilterByStatusValue: (value: FilterByStatusValues) => void;
+    setFilterByColorTagValuesHandler: (filterValueTags: Array<string>) => void;
 };
 
 export const FilterOptions = (props: Props) => {
@@ -12,6 +13,7 @@ export const FilterOptions = (props: Props) => {
         filterByStatusValue,
         filterByColorTagValues,
         onSetFilterByStatusValue,
+        setFilterByColorTagValuesHandler,
     } = props;
 
     const handleSetFilterByStatusValue = (value: FilterByStatusValues) => {
@@ -57,6 +59,9 @@ export const FilterOptions = (props: Props) => {
             </div>
             <ColorFilterPannel
                 filterByColorTagValues={filterByColorTagValues}
+                setFilterByColorTagValuesHandler={
+                    setFilterByColorTagValuesHandler
+                }
             />
         </div>
     );

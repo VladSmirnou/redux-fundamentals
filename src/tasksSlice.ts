@@ -12,25 +12,21 @@ const tasksFromApi = [
     { id: 4, title: 'forth', colorTag: undefined, isDone: false },
 ];
 
-type initialStateType = {
-    tasks: {
-        byId: {
-            [key: string]: Task;
-        };
-        allIds: Array<number>;
+type Tasks = {
+    byId: {
+        [key: string]: Task;
     };
+    allIds: Array<number>;
 };
 
 const initialState = tasksFromApi.reverse().reduce(
     (acc, newVal) => {
         const { id, ...rest } = newVal;
-        acc.tasks.byId[id] = rest;
-        acc.tasks.allIds.push(id);
+        acc.byId[id] = rest;
+        acc.allIds.push(id);
         return acc;
     },
-    {
-        tasks: { byId: {}, allIds: [] },
-    } as initialStateType,
+    { byId: {}, allIds: [] } as Tasks,
 );
 
 const tasksSlice = createSlice({
@@ -38,37 +34,65 @@ const tasksSlice = createSlice({
     initialState,
     reducers: (create) => ({
         addTask: create.reducer<string>((state, action) => {
-            const nextTaskId = getNextTaskId(state.tasks.allIds);
-            state.tasks.byId[nextTaskId] = {
+            const nextTaskId = getNextTaskId(state.allIds);
+            state.byId[nextTaskId] = {
                 title: action.payload,
                 colorTag: undefined,
                 isDone: false,
             };
-            state.tasks.allIds.unshift(nextTaskId);
+            state.allIds.unshift(nextTaskId);
         }),
         removeTask: create.reducer<number>((state, action) => {
-            delete state.tasks.byId[action.payload];
-            const taskId = state.tasks.allIds.findIndex(
+            delete state.byId[action.payload];
+            const taskId = state.allIds.findIndex(
                 (taskId) => action.payload === taskId,
             );
-            state.tasks.allIds.splice(taskId, 1);
+            state.allIds.splice(taskId, 1);
         }),
         updateTaskStatus: create.reducer<{
             taskId: number;
             nextTaskStatus: boolean;
         }>((state, action) => {
             const { taskId, nextTaskStatus } = action.payload;
-            state.tasks.byId[taskId].isDone = nextTaskStatus;
+            state.byId[taskId].isDone = nextTaskStatus;
         }),
+        markAllTasksAsCompleted: create.reducer((state) => {
+            Object.values(state.byId).forEach((task) => {
+                task.isDone = true;
+            });
+        }),
+        removeCompletedTasks: create.reducer((state) => {
+            const taskIdsToRemove = new Set();
+            Object.entries(state.byId).forEach(([id, task]) => {
+                if (task.isDone) {
+                    taskIdsToRemove.add(+id);
+                    delete state.byId[id];
+                }
+            });
+            const remainingIds = state.allIds.filter(
+                (id) => !taskIdsToRemove.has(id),
+            );
+            state.allIds = remainingIds;
+        }),
+        setTaskColorTag: create.reducer<{ taskId: number; colorTag: string }>(
+            (state, action) => {
+                const { taskId, colorTag } = action.payload;
+                state.byId[taskId].colorTag = colorTag;
+            },
+        ),
     }),
     selectors: {
-        selectTaskIds: (state) => state.tasks.allIds,
-        selectTaskById: (state, taskId: number) => state.tasks.byId[taskId],
-        selectTasks: (state) => state.tasks.byId,
+        selectTasks: (state) => state.byId,
     },
 });
 
 export const { reducer: tasksReducer, name: tasksSliceName } = tasksSlice;
-export const { addTask, removeTask, updateTaskStatus } = tasksSlice.actions;
-export const { selectTaskIds, selectTaskById, selectTasks } =
-    tasksSlice.selectors;
+export const {
+    addTask,
+    removeTask,
+    updateTaskStatus,
+    markAllTasksAsCompleted,
+    removeCompletedTasks,
+    setTaskColorTag,
+} = tasksSlice.actions;
+export const { selectTasks } = tasksSlice.selectors;

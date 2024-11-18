@@ -7,6 +7,7 @@ type Props = {
     filterByStatusValue: FilterByStatusValues;
     filterByColorTagValues: FilterColorTagValue;
     setFilterByStatusValue: (value: FilterByStatusValues) => void;
+    setFilterByColorTagValuesHandler: (filterValueTags: Array<string>) => void;
 };
 
 export const Footer = (props: Props) => {
@@ -14,6 +15,7 @@ export const Footer = (props: Props) => {
         filterByStatusValue,
         filterByColorTagValues,
         setFilterByStatusValue,
+        setFilterByColorTagValuesHandler,
     } = props;
 
     return (
@@ -24,6 +26,9 @@ export const Footer = (props: Props) => {
                 filterByStatusValue={filterByStatusValue}
                 filterByColorTagValues={filterByColorTagValues}
                 onSetFilterByStatusValue={setFilterByStatusValue}
+                setFilterByColorTagValuesHandler={
+                    setFilterByColorTagValuesHandler
+                }
             />
         </div>
     );
