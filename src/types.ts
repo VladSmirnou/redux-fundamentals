@@ -1,5 +1,5 @@
 export type FilterByStatusValues = 'all' | 'active' | 'completed';
-export type FilterColorTagValue = {
+export type FilterColorTagValues = {
     [key: string]: { selected: boolean };
 };
 export type Task = {

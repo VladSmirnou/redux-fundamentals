@@ -1,32 +1,20 @@
 import { ColorSelector } from './ColorSelector';
-import { FilterColorTagValue } from './types';
+import { multipleSelectorWrapper } from './multipleSelectorWrapper';
 
 type Props = {
-    filterByColorTagValues: FilterColorTagValue;
-    setFilterByColorTagValuesHandler: (filterValueTags: Array<string>) => void;
+    colorTags: Array<string>;
+    selectedColorTags: Array<string>;
+    onSetFilterByColorTagValues: (filterValueTags: Set<string>) => void;
 };
 
 export const ColorFilterPannel = (props: Props) => {
-    const { filterByColorTagValues, setFilterByColorTagValuesHandler } = props;
-    const colors = Object.keys(filterByColorTagValues);
-
-    const selectedColorTags = Object.entries(filterByColorTagValues).reduce(
-        (colorTags, [colorTag, { selected }]) => {
-            if (selected) {
-                colorTags.push(colorTag);
-            }
-            return colorTags;
-        },
-        [] as Array<string>,
-    );
-
+    const { colorTags, ...rest } = props;
     return (
         <div>
-            <span>Select color tags to filer tasks:</span>
+            <span>Select color tags to filter tasks:</span>
             <ColorSelector
-                colors={colors}
-                selectedColorTags={selectedColorTags}
-                onSetColorTags={setFilterByColorTagValuesHandler}
+                colorTags={colorTags}
+                render={multipleSelectorWrapper(rest)}
             />
         </div>
     );

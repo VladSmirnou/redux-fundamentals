@@ -1,15 +1,14 @@
 import { shallowEqual } from 'react-redux';
 import { useAppSelector } from './hooks/use-app-selector';
 import { Task } from './Task';
-import { FilterByStatusValues } from './types';
-import { RootState } from './store';
+import { FilterByStatusValues, Task as TaskType } from './types';
 
-const selectFilteredTasks = (
-    state: RootState,
+const selectTaskIds = (
+    tasksObj: { [key: string]: TaskType },
     filterValue: FilterByStatusValues,
     selectedColorTags: Array<string>,
 ) => {
-    let tasks = Object.entries(state.tasks.byId);
+    let tasks = Object.entries(tasksObj);
     if (filterValue !== 'all') {
         tasks = tasks.filter(([, task]) => {
             if (task.isDone && filterValue === 'completed') {
@@ -22,28 +21,29 @@ const selectFilteredTasks = (
         });
     }
     if (selectedColorTags.length) {
-        tasks = tasks.filter(([taskId]) => {
-            return selectedColorTags.includes(
-                state.tasks.byId[taskId].colorTag ?? '',
-            );
+        tasks = tasks.filter(([, task]) => {
+            const colorTag = task.colorTag;
+            if (colorTag) {
+                return selectedColorTags.includes(colorTag);
+            }
+            return;
         });
     }
-
-    return tasks.map(([taskId]) => +taskId);
+    return tasks.map(([taskId]) => +taskId).reverse();
 };
 
 type Props = {
-    colors: Array<string>;
+    colorTags: Array<string>;
     filterByStatusValue: FilterByStatusValues;
     filterByColorTagValues: Array<string>;
 };
 
 export const Tasks = (props: Props) => {
-    const { filterByStatusValue, colors, filterByColorTagValues } = props;
+    const { filterByStatusValue, colorTags, filterByColorTagValues } = props;
     const taskIds = useAppSelector(
         (state) =>
-            selectFilteredTasks(
-                state,
+            selectTaskIds(
+                state.tasks.byId,
                 filterByStatusValue,
                 filterByColorTagValues,
             ),
@@ -51,7 +51,7 @@ export const Tasks = (props: Props) => {
     );
 
     const JSXTasks = taskIds.map((taskId) => {
-        return <Task key={taskId} taskId={taskId} colors={colors} />;
+        return <Task key={taskId} taskId={taskId} colorTags={colorTags} />;
     });
 
     return <ul>{JSXTasks}</ul>;

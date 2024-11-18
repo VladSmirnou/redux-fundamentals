@@ -3,19 +3,15 @@ import { FilterByStatusValues } from './types';
 
 type Props = {
     filterByStatusValue: FilterByStatusValues;
-    colors: Array<string>;
+    colorTags: Array<string>;
     filterByColorTagValues: Array<string>;
 };
 
 export const Todolist = (props: Props) => {
-    const { filterByStatusValue, colors, filterByColorTagValues } = props;
     return (
         <div>
-            <Tasks
-                colors={colors}
-                filterByStatusValue={filterByStatusValue}
-                filterByColorTagValues={filterByColorTagValues}
-            />
+            <p>What needs to be done?</p>
+            <Tasks {...props} />
         </div>
     );
 };

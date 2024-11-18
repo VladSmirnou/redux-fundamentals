@@ -30,7 +30,7 @@ export const AddItemForm = memo(function AddItemForm(props: Props) {
     return (
         <div>
             <input type="text" value={inputText} onChange={handleChange} />
-            {errorText && <p>ti dolbaeb</p>}
+            {errorText && <p>{errorText}</p>}
             <button disabled={!!errorText} onClick={handleAdditem}>
                 add
             </button>

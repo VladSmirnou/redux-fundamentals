@@ -47,7 +47,9 @@ const tasksSlice = createSlice({
             const taskId = state.allIds.findIndex(
                 (taskId) => action.payload === taskId,
             );
-            state.allIds.splice(taskId, 1);
+            if (taskId > -1) {
+                state.allIds.splice(taskId, 1);
+            }
         }),
         updateTaskStatus: create.reducer<{
             taskId: number;

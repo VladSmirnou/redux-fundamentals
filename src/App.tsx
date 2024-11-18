@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { AddItemForm } from './AddItemForm';
 import { Footer } from './Footer';
 import { Todolist } from './Todolist';
-import { FilterByStatusValues, FilterColorTagValue } from './types';
+import { FilterByStatusValues, FilterColorTagValues } from './types';
 import { useAppDispatch } from './hooks/use-app-dispatch';
 import { addTask } from './tasksSlice';
 
@@ -13,7 +13,7 @@ function App() {
         useState<FilterByStatusValues>('all');
 
     const [filterByColorTagValues, setFilterByColorTagValues] =
-        useState<FilterColorTagValue>({
+        useState<FilterColorTagValues>({
             red: { selected: false },
             green: { selected: false },
             blue: { selected: false },
@@ -27,19 +27,17 @@ function App() {
         dispatch(addTask(taskTitle));
     };
 
-    const setFilterByColorTagValuesHandler = (
-        filterValueTags: Array<string>,
-    ) => {
+    const setFilterByColorTagValuesHandler = (filterValueTags: Set<string>) => {
         const nextFilterByColorTagValues = Object.entries(
             filterByColorTagValues,
         ).reduce((acc, [tag]) => {
-            acc[tag] = { selected: filterValueTags.includes(tag) };
+            acc[tag] = { selected: filterValueTags.has(tag) };
             return acc;
-        }, {} as FilterColorTagValue);
+        }, {} as FilterColorTagValues);
         setFilterByColorTagValues(nextFilterByColorTagValues);
     };
 
-    const colors = Object.keys(filterByColorTagValues);
+    const colorTags = Object.keys(filterByColorTagValues);
 
     const selectedColorTagValues = Object.entries(
         filterByColorTagValues,
@@ -54,17 +52,16 @@ function App() {
         <div>
             <AddItemForm onAddItem={addTaskHandler} />
             <Todolist
+                colorTags={colorTags}
                 filterByColorTagValues={selectedColorTagValues}
                 filterByStatusValue={filterByStatusValue}
-                colors={colors}
             />
             <Footer
+                colorTags={colorTags}
+                selectedColorTags={selectedColorTagValues}
                 filterByStatusValue={filterByStatusValue}
-                filterByColorTagValues={filterByColorTagValues}
-                setFilterByStatusValue={setFilterByStatusValueHandler}
-                setFilterByColorTagValuesHandler={
-                    setFilterByColorTagValuesHandler
-                }
+                onSetFilterByStatusValue={setFilterByStatusValueHandler}
+                onSetFilterByColorTagValues={setFilterByColorTagValuesHandler}
             />
         </div>
     );

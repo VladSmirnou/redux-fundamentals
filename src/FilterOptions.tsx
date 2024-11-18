@@ -1,19 +1,21 @@
 import { ColorFilterPannel } from './ColorFilterPannel';
-import { FilterByStatusValues, FilterColorTagValue } from './types';
+import { FilterByStatusValues } from './types';
 
 type Props = {
+    colorTags: Array<string>;
+    selectedColorTags: Array<string>;
     filterByStatusValue: FilterByStatusValues;
-    filterByColorTagValues: FilterColorTagValue;
     onSetFilterByStatusValue: (value: FilterByStatusValues) => void;
-    setFilterByColorTagValuesHandler: (filterValueTags: Array<string>) => void;
+    onSetFilterByColorTagValues: (filterValueTags: Set<string>) => void;
 };
 
 export const FilterOptions = (props: Props) => {
     const {
+        colorTags,
+        selectedColorTags,
         filterByStatusValue,
-        filterByColorTagValues,
         onSetFilterByStatusValue,
-        setFilterByColorTagValuesHandler,
+        onSetFilterByColorTagValues,
     } = props;
 
     const handleSetFilterByStatusValue = (value: FilterByStatusValues) => {
@@ -58,10 +60,9 @@ export const FilterOptions = (props: Props) => {
                 </button>
             </div>
             <ColorFilterPannel
-                filterByColorTagValues={filterByColorTagValues}
-                setFilterByColorTagValuesHandler={
-                    setFilterByColorTagValuesHandler
-                }
+                colorTags={colorTags}
+                selectedColorTags={selectedColorTags}
+                onSetFilterByColorTagValues={onSetFilterByColorTagValues}
             />
         </div>
     );

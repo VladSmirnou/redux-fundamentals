@@ -4,17 +4,19 @@ import { useAppSelector } from './hooks/use-app-selector';
 import { removeTask, setTaskColorTag, updateTaskStatus } from './tasksSlice';
 import { RootState } from './store';
 import { ColorSelector } from './ColorSelector';
+import { singleSelectorWrapper } from './singleSelectorWrapper';
 
 type Props = {
     taskId: number;
-    colors: Array<string>;
+    colorTags: Array<string>;
 };
 
 const selectTaskById = (state: RootState, taskId: number) =>
     state.tasks.byId[taskId];
 
 export const Task = (props: Props) => {
-    const { taskId, colors } = props;
+    const { taskId, colorTags } = props;
+
     const dispatch = useAppDispatch();
 
     const task = useAppSelector((state) => selectTaskById(state, taskId));
@@ -23,7 +25,7 @@ export const Task = (props: Props) => {
         dispatch(removeTask(taskId));
     };
 
-    const updateTaskStatusHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    const handleUpdateTaskStatus = (e: ChangeEvent<HTMLInputElement>) => {
         dispatch(
             updateTaskStatus({ taskId, nextTaskStatus: e.target.checked }),
         );
@@ -38,14 +40,16 @@ export const Task = (props: Props) => {
             <input
                 type="checkbox"
                 checked={task.isDone}
-                onChange={updateTaskStatusHandler}
+                onChange={handleUpdateTaskStatus}
             />
             <span>{task.title}</span>
             <button onClick={deleteTask}>X</button>
             <ColorSelector
-                colors={colors}
-                selectedColorTag={task.colorTag}
-                onSetColorTag={setColorTag}
+                colorTags={colorTags}
+                render={singleSelectorWrapper({
+                    selectedColorTag: task.colorTag,
+                    onSetColorTag: setColorTag,
+                })}
             />
         </li>
     );

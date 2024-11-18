@@ -1,21 +1,23 @@
 import { ActiveTasksCount } from './ActiveTasksCount';
 import { FilterOptions } from './FilterOptions';
 import { TasksActions } from './TasksActions';
-import { FilterByStatusValues, FilterColorTagValue } from './types';
+import { FilterByStatusValues } from './types';
 
 type Props = {
+    colorTags: Array<string>;
+    selectedColorTags: Array<string>;
     filterByStatusValue: FilterByStatusValues;
-    filterByColorTagValues: FilterColorTagValue;
-    setFilterByStatusValue: (value: FilterByStatusValues) => void;
-    setFilterByColorTagValuesHandler: (filterValueTags: Array<string>) => void;
+    onSetFilterByStatusValue: (value: FilterByStatusValues) => void;
+    onSetFilterByColorTagValues: (filterValueTags: Set<string>) => void;
 };
 
 export const Footer = (props: Props) => {
     const {
         filterByStatusValue,
-        filterByColorTagValues,
-        setFilterByStatusValue,
-        setFilterByColorTagValuesHandler,
+        onSetFilterByStatusValue,
+        onSetFilterByColorTagValues,
+        colorTags,
+        selectedColorTags,
     } = props;
 
     return (
@@ -23,12 +25,11 @@ export const Footer = (props: Props) => {
             <ActiveTasksCount />
             <TasksActions />
             <FilterOptions
+                colorTags={colorTags}
+                selectedColorTags={selectedColorTags}
                 filterByStatusValue={filterByStatusValue}
-                filterByColorTagValues={filterByColorTagValues}
-                onSetFilterByStatusValue={setFilterByStatusValue}
-                setFilterByColorTagValuesHandler={
-                    setFilterByColorTagValuesHandler
-                }
+                onSetFilterByStatusValue={onSetFilterByStatusValue}
+                onSetFilterByColorTagValues={onSetFilterByColorTagValues}
             />
         </div>
     );
