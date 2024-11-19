@@ -19,7 +19,9 @@ export const Task = (props: Props) => {
 
     const dispatch = useAppDispatch();
 
-    const task = useAppSelector((state) => selectTaskById(state, taskId));
+    const { title, isDone, colorTag } = useAppSelector((state) =>
+        selectTaskById(state, taskId),
+    );
 
     const deleteTask = () => {
         dispatch(removeTask(taskId));
@@ -39,15 +41,15 @@ export const Task = (props: Props) => {
         <li>
             <input
                 type="checkbox"
-                checked={task.isDone}
+                checked={isDone}
                 onChange={handleUpdateTaskStatus}
             />
-            <span>{task.title}</span>
+            <span>{title}</span>
             <button onClick={deleteTask}>X</button>
             <ColorSelector
                 colorTags={colorTags}
                 render={singleSelectorWrapper({
-                    selectedColorTag: task.colorTag,
+                    selectedColorTag: colorTag,
                     onSetColorTag: setColorTag,
                 })}
             />
