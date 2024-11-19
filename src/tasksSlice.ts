@@ -1,9 +1,5 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createEntityAdapter, createSlice } from '@reduxjs/toolkit';
 import { Task } from './types';
-
-const getNextTaskId = (tasks: Array<number>) => {
-    return (tasks.at(0) ?? 0) + 1;
-};
 
 const tasksFromApi = [
     { id: 1, title: 'first', colorTag: undefined, isDone: false },
@@ -12,80 +8,49 @@ const tasksFromApi = [
     { id: 4, title: 'forth', colorTag: undefined, isDone: false },
 ];
 
-type Tasks = {
-    byId: {
-        [key: string]: Task;
-    };
-    allIds: Array<number>;
-};
+export const tasksAdapter = createEntityAdapter<Task>();
 
-const initialState = tasksFromApi.reverse().reduce(
-    (acc, newVal) => {
-        const { id, ...rest } = newVal;
-        acc.byId[id] = rest;
-        acc.allIds.push(id);
-        return acc;
-    },
-    { byId: {}, allIds: [] } as Tasks,
-);
+const tasksState = tasksAdapter.getInitialState();
+
+const initialState = tasksFromApi.reduce((acc, newVal) => {
+    const { id } = newVal;
+    acc.entities[id] = newVal;
+    acc.ids.push(id);
+    return acc;
+}, tasksState);
 
 const tasksSlice = createSlice({
     name: 'tasks',
     initialState,
     reducers: (create) => ({
-        addTask: create.reducer<string>((state, action) => {
-            const nextTaskId = getNextTaskId(state.allIds);
-            state.byId[nextTaskId] = {
-                title: action.payload,
-                colorTag: undefined,
-                isDone: false,
-            };
-            state.allIds.unshift(nextTaskId);
-        }),
-        removeTask: create.reducer<number>((state, action) => {
-            delete state.byId[action.payload];
-            const taskId = state.allIds.findIndex(
-                (taskId) => action.payload === taskId,
-            );
-            if (taskId > -1) {
-                state.allIds.splice(taskId, 1);
-            }
-        }),
-        updateTaskStatus: create.reducer<{
-            taskId: number;
-            nextTaskStatus: boolean;
-        }>((state, action) => {
-            const { taskId, nextTaskStatus } = action.payload;
-            state.byId[taskId].isDone = nextTaskStatus;
-        }),
+        // eslint-disable-next-line
+        addTask: tasksAdapter.addOne,
+        // eslint-disable-next-line
+        removeTask: tasksAdapter.removeOne,
+        // eslint-disable-next-line
+        updateTaskStatus: tasksAdapter.updateOne,
+        // eslint-disable-next-line
+        setTaskColorTag: tasksAdapter.updateOne,
         markAllTasksAsCompleted: create.reducer((state) => {
-            Object.values(state.byId).forEach((task) => {
+            Object.values(state.entities).forEach((task) => {
                 task.isDone = true;
             });
         }),
         removeCompletedTasks: create.reducer((state) => {
             const taskIdsToRemove = new Set();
-            Object.entries(state.byId).forEach(([id, task]) => {
+            Object.entries(state.entities).forEach(([id, task]) => {
                 if (task.isDone) {
-                    taskIdsToRemove.add(+id);
-                    delete state.byId[id];
+                    const numericId = +id;
+                    taskIdsToRemove.add(numericId);
+                    delete state.entities[numericId];
                 }
             });
-            const remainingIds = state.allIds.filter(
+            const remainingIds = state.ids.filter(
                 (id) => !taskIdsToRemove.has(id),
             );
-            state.allIds = remainingIds;
+            state.ids = remainingIds;
         }),
-        setTaskColorTag: create.reducer<{ taskId: number; colorTag: string }>(
-            (state, action) => {
-                const { taskId, colorTag } = action.payload;
-                state.byId[taskId].colorTag = colorTag;
-            },
-        ),
     }),
-    selectors: {
-        selectTasks: (state) => state.byId,
-    },
 });
 
 export const { reducer: tasksReducer, name: tasksSliceName } = tasksSlice;
@@ -97,4 +62,3 @@ export const {
     removeCompletedTasks,
     setTaskColorTag,
 } = tasksSlice.actions;
-export const { selectTasks } = tasksSlice.selectors;

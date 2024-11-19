@@ -1,8 +1,8 @@
 import { createSelector } from '@reduxjs/toolkit';
 import { useAppSelector } from './hooks/use-app-selector';
-import { selectTasks } from './tasksSlice';
+import { allTasks } from './selectors';
 
-const selectActiveTasksCount = createSelector(selectTasks, (tasks) => {
+const selectActiveTasksCount = createSelector(allTasks, (tasks) => {
     return Object.values(tasks).reduce((activeTasksCount, task) => {
         return !task.isDone ? activeTasksCount + 1 : activeTasksCount;
     }, 0);

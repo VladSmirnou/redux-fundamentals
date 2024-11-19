@@ -14,6 +14,7 @@ export const ColorFilterPannel = (props: Props) => {
             <span>Select color tags to filter tasks:</span>
             <ColorSelector
                 colorTags={colorTags}
+                defaulOptionText={'None'}
                 render={multipleSelectorWrapper(rest)}
             />
         </div>

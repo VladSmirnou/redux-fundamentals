@@ -43,7 +43,7 @@ export const Tasks = (props: Props) => {
     const taskIds = useAppSelector(
         (state) =>
             selectTaskIds(
-                state.tasks.byId,
+                state.entities,
                 filterByStatusValue,
                 filterByColorTagValues,
             ),

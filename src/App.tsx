@@ -5,6 +5,7 @@ import { Todolist } from './Todolist';
 import { FilterByStatusValues, FilterColorTagValues } from './types';
 import { useAppDispatch } from './hooks/use-app-dispatch';
 import { addTask } from './tasksSlice';
+import { getNextTaskId } from './getNextTaskid';
 
 function App() {
     const dispatch = useAppDispatch();
@@ -24,13 +25,20 @@ function App() {
     };
 
     const addTaskHandler = (taskTitle: string) => {
-        dispatch(addTask(taskTitle));
+        dispatch(
+            addTask({
+                id: getNextTaskId(),
+                title: taskTitle,
+                colorTag: undefined,
+                isDone: false,
+            }),
+        );
     };
 
     const setFilterByColorTagValuesHandler = (filterValueTags: Set<string>) => {
-        const nextFilterByColorTagValues = Object.entries(
+        const nextFilterByColorTagValues = Object.keys(
             filterByColorTagValues,
-        ).reduce((acc, [tag]) => {
+        ).reduce((acc, tag) => {
             acc[tag] = { selected: filterValueTags.has(tag) };
             return acc;
         }, {} as FilterColorTagValues);

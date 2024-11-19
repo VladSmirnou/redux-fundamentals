@@ -1,29 +1,27 @@
 import { ChangeEvent } from 'react';
+import { DEFAULT_OPTION_VALUE as DEFAULT_OPTION_VALUE } from './constants';
 
 type Kwargs = {
     selectedColorTag: string | undefined;
-    onSetColorTag: (colorTag: string) => void;
+    onSetColorTag: (colorTag: string | undefined) => void;
 };
 
 export const singleSelectorWrapper = (kwargs: Kwargs) => {
     const { selectedColorTag, onSetColorTag } = kwargs;
 
     return function SingleSelector(JSXColorSelectOptions: Array<JSX.Element>) {
-        const defaultValue = 'default';
-        const defaultOption = (
-            <option key={defaultValue} value={defaultValue} disabled>
-                color tag
-            </option>
-        );
-
-        JSXColorSelectOptions.unshift(defaultOption);
-
         const handleSetColorTag = (e: ChangeEvent<HTMLSelectElement>) => {
-            onSetColorTag(e.target.value);
+            const nextColorTagValue = e.target.value;
+            onSetColorTag(
+                nextColorTagValue === DEFAULT_OPTION_VALUE ? undefined : (
+                    nextColorTagValue
+                ),
+            );
         };
+
         return (
             <select
-                value={selectedColorTag ?? defaultValue}
+                value={selectedColorTag ?? DEFAULT_OPTION_VALUE}
                 onChange={handleSetColorTag}
             >
                 {JSXColorSelectOptions}

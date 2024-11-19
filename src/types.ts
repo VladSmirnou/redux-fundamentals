@@ -3,7 +3,15 @@ export type FilterColorTagValues = {
     [key: string]: { selected: boolean };
 };
 export type Task = {
+    id: number;
     title: string;
     colorTag: string | undefined;
     isDone: boolean;
 };
+
+// type Tasks = {
+//     ids: Array<number>;
+//     entities: {
+//         [id: string]: Task;
+//     };
+// };
