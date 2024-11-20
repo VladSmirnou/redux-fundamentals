@@ -5,7 +5,7 @@ import { Todolist } from './Todolist';
 import { FilterByStatusValues, FilterColorTagValues } from './types';
 import { useAppDispatch } from './hooks/use-app-dispatch';
 import { addTask } from './tasksSlice';
-import { getNextTaskId } from './getNextTaskid';
+import { getNextTaskId } from './getNextTaskId';
 
 function App() {
     const dispatch = useAppDispatch();
