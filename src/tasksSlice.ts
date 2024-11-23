@@ -1,4 +1,8 @@
-import { createEntityAdapter, createSlice } from '@reduxjs/toolkit';
+import {
+    createEntityAdapter,
+    createSlice,
+    PayloadAction,
+} from '@reduxjs/toolkit';
 import { Task } from './types';
 
 const tasksFromApi = [
@@ -22,21 +26,38 @@ const initialState = tasksFromApi.reduce((acc, newVal) => {
 const tasksSlice = createSlice({
     name: 'tasks',
     initialState,
-    reducers: (create) => ({
-        // eslint-disable-next-line
-        addTask: tasksAdapter.addOne,
+    reducers: {
+        addTask: {
+            reducer: (state, action: PayloadAction<Omit<Task, 'id'>>) => {
+                const allIds = state.ids;
+                const newTask = {
+                    id: allIds.length ? Math.max(...allIds) + 1 : 0,
+                    ...action.payload,
+                };
+                tasksAdapter.addOne(state, newTask);
+            },
+            prepare: (title: string) => {
+                return {
+                    payload: {
+                        title,
+                        colorTag: undefined,
+                        isDone: false,
+                    },
+                };
+            },
+        },
         // eslint-disable-next-line
         removeTask: tasksAdapter.removeOne,
         // eslint-disable-next-line
         updateTaskStatus: tasksAdapter.updateOne,
         // eslint-disable-next-line
         setTaskColorTag: tasksAdapter.updateOne,
-        markAllTasksAsCompleted: create.reducer((state) => {
+        markAllTasksAsCompleted: (state) => {
             Object.values(state.entities).forEach((task) => {
                 task.isDone = true;
             });
-        }),
-        removeCompletedTasks: create.reducer((state) => {
+        },
+        removeCompletedTasks: (state) => {
             const taskIdsToRemove = new Set();
             Object.entries(state.entities).forEach(([id, task]) => {
                 if (task.isDone) {
@@ -49,8 +70,8 @@ const tasksSlice = createSlice({
                 (id) => !taskIdsToRemove.has(id),
             );
             state.ids = remainingIds;
-        }),
-    }),
+        },
+    },
 });
 
 export const { reducer: tasksReducer, name: tasksSliceName } = tasksSlice;
