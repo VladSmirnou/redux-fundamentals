@@ -1,0 +1,5 @@
+.task {
+    display: flex;
+    border-top: 1px solid black;
+    padding: 15px;
+}

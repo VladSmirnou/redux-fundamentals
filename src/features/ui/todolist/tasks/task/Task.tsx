@@ -1,10 +1,15 @@
 import { ChangeEvent } from 'react';
-import { ColorSelector } from './ColorSelector';
-import { useAppDispatch } from './hooks/use-app-dispatch';
-import { useAppSelector } from './hooks/use-app-selector';
-import { selectById } from './selectors';
-import { singleSelectorWrapper } from './singleSelectorWrapper';
-import { removeTask, setTaskColorTag, updateTaskStatus } from './tasksSlice';
+import { singleSelectorWrapper } from './single-selector/singleSelectorWrapper';
+import { selectById } from '@/app/selectors';
+import { useAppDispatch } from '@/common/hooks/use-app-dispatch';
+import { useAppSelector } from '@/common/hooks/use-app-selector';
+import {
+    removeTask,
+    updateTaskStatus,
+    setTaskColorTag,
+} from '@/features/model/tasksSlice';
+import { ColorSelector } from './color-selector/color-selector';
+import s from './task.module.css';
 
 type Props = {
     taskId: number;
@@ -38,14 +43,13 @@ export const Task = (props: Props) => {
     };
 
     return (
-        <li>
+        <li className={s.task}>
             <input
                 type="checkbox"
                 checked={isDone}
                 onChange={handleUpdateTaskStatus}
             />
             <span>{title}</span>
-            <button onClick={deleteTask}>X</button>
             <ColorSelector
                 colorTags={colorTags}
                 defaulOptionText={'color tag (None)'}
@@ -54,6 +58,7 @@ export const Task = (props: Props) => {
                     onSetColorTag: setColorTag,
                 })}
             />
+            <button onClick={deleteTask}>X</button>
         </li>
     );
 };

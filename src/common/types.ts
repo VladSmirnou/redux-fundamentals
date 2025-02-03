@@ -8,10 +8,3 @@ export type Task = {
     colorTag: string | undefined;
     isDone: boolean;
 };
-
-// type Tasks = {
-//     ids: Array<number>;
-//     entities: {
-//         [id: string]: Task;
-//     };
-// };

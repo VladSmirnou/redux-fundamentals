@@ -1,7 +1,8 @@
-import { ActiveTasksCount } from './ActiveTasksCount';
-import { FilterOptions } from './FilterOptions';
-import { TasksActions } from './TasksActions';
-import { FilterByStatusValues } from './types';
+import { ActiveTasksCount } from './active-task-count/active-tasks-count';
+import { FilterOptions } from './filter-options/filter-options';
+import { TasksActions } from './tasks-actions/tasks-actions';
+import { FilterByStatusValues } from '../../types';
+import s from './footer.module.css';
 
 type Props = {
     colorTags: Array<string>;
@@ -21,9 +22,9 @@ export const Footer = (props: Props) => {
     } = props;
 
     return (
-        <div style={{ display: 'flex' }}>
-            <ActiveTasksCount />
+        <div className={s.footer}>
             <TasksActions />
+            <ActiveTasksCount />
             <FilterOptions
                 colorTags={colorTags}
                 selectedColorTags={selectedColorTags}

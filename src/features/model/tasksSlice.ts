@@ -3,7 +3,7 @@ import {
     createSlice,
     PayloadAction,
 } from '@reduxjs/toolkit';
-import { Task } from './types';
+import { Task } from '../../common/types';
 
 const tasksFromApi = [
     { id: 1, title: 'first', colorTag: undefined, isDone: false },

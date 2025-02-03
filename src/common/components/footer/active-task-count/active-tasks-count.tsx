@@ -1,6 +1,6 @@
 import { createSelector } from '@reduxjs/toolkit';
-import { useAppSelector } from './hooks/use-app-selector';
-import { allTasks } from './selectors';
+import { useAppSelector } from '../../../hooks/use-app-selector';
+import { allTasks } from '../../../../app/selectors';
 
 const selectActiveTasksCount = createSelector(allTasks, (tasks) => {
     return Object.values(tasks).reduce((activeTasksCount, task) => {
@@ -13,7 +13,10 @@ export const ActiveTasksCount = () => {
     const singularOrPlural = activeTasksCount === 1 ? 'task' : 'tasks';
     return (
         <div>
-            Active tasks count: {activeTasksCount} {singularOrPlural}
+            <h3>Remaining todos</h3>
+            <p>
+                {activeTasksCount} {singularOrPlural} left
+            </p>
         </div>
     );
 };

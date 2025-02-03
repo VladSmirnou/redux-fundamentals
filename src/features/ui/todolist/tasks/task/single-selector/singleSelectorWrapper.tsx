@@ -1,5 +1,6 @@
+import { DEFAULT_OPTION_VALUE } from '@/common/constants';
 import { ChangeEvent } from 'react';
-import { DEFAULT_OPTION_VALUE as DEFAULT_OPTION_VALUE } from './constants';
+import s from './single-selector.module.css';
 
 type Kwargs = {
     selectedColorTag: string | undefined;
@@ -21,6 +22,7 @@ export const singleSelectorWrapper = (kwargs: Kwargs) => {
 
         return (
             <select
+                className={s.selector}
                 value={selectedColorTag ?? DEFAULT_OPTION_VALUE}
                 onChange={handleSetColorTag}
             >

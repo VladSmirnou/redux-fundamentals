@@ -1,7 +1,7 @@
+import { useAppSelector } from '@/common/hooks/use-app-selector';
+import { FilterByStatusValues, type Task as TaskType } from '@/common/types';
 import { shallowEqual } from 'react-redux';
-import { useAppSelector } from './hooks/use-app-selector';
-import { Task } from './Task';
-import { FilterByStatusValues, Task as TaskType } from './types';
+import { Task } from './task/Task';
 
 const selectTaskIds = (
     tasksObj: { [key: string]: TaskType },
@@ -54,5 +54,11 @@ export const Tasks = (props: Props) => {
         return <Task key={taskId} taskId={taskId} colorTags={colorTags} />;
     });
 
-    return <ul>{JSXTasks}</ul>;
+    return (
+        <div>
+            {JSXTasks.length ?
+                <ul>{JSXTasks}</ul>
+            :   <p>You dont have any tasks</p>}
+        </div>
+    );
 };

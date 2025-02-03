@@ -1,5 +1,5 @@
-import { ColorSelector } from './ColorSelector';
-import { multipleSelectorWrapper } from './multipleSelectorWrapper';
+import { ColorSelector } from '../../../../../features/ui/todolist/tasks/task/color-selector/color-selector';
+import { multipleSelectorWrapper } from './multiple-selector/multipleSelectorWrapper';
 
 type Props = {
     colorTags: Array<string>;
@@ -11,7 +11,7 @@ export const ColorFilterPannel = (props: Props) => {
     const { colorTags, ...rest } = props;
     return (
         <div>
-            <span>Select color tags to filter tasks:</span>
+            <h3>Select color tags to filter tasks:</h3>
             <ColorSelector
                 colorTags={colorTags}
                 defaulOptionText={'None'}

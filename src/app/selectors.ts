@@ -1,5 +1,5 @@
 import { RootState } from './store';
-import { tasksAdapter } from './tasksSlice';
+import { tasksAdapter } from '../features/model/tasksSlice';
 
 const selectors = tasksAdapter.getSelectors((state: RootState) => state);
 

@@ -1,0 +1,13 @@
+.wrapper {
+    display: flex;
+    margin-bottom: 20px;
+}
+
+.input {
+    flex: 1;
+    padding: 15px;
+}
+
+.button {
+    margin-left: 20px;
+}

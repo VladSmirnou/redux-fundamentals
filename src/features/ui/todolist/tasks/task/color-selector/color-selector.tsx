@@ -1,5 +1,5 @@
 import { ReactElement } from 'react';
-import { DEFAULT_OPTION_VALUE } from './constants';
+import { DEFAULT_OPTION_VALUE } from '../../../../../../common/constants';
 
 type Props = {
     colorTags: Array<string>;

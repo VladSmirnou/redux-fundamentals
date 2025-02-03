@@ -1,0 +1,5 @@
+.footer {
+    display: flex;
+    background: white;
+    border-top: 2px solid rgb(231, 231, 231);
+}
