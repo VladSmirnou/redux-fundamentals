@@ -3,6 +3,8 @@ import {
     markAllTasksAsCompleted,
     removeCompletedTasks,
 } from '../../../../features/model/tasksSlice';
+import { Button } from '../../button/button';
+import styles from './task-actions.module.css';
 
 export const TasksActions = () => {
     const dispatch = useAppDispatch();
@@ -16,14 +18,16 @@ export const TasksActions = () => {
     };
 
     return (
-        <div>
-            <h3>Actions</h3>
-            <button onClick={handleMarkAllTasksAsCompleted}>
-                Complete all tasks
-            </button>
-            <button onClick={handleRemoveCompletedTasks}>
-                Remove all completed tasks
-            </button>
+        <div className={styles.buttons_wrapper}>
+            <Button
+                className={styles.complete_all_button}
+                onClick={handleMarkAllTasksAsCompleted}
+            >
+                Complete all
+            </Button>
+            <Button onClick={handleRemoveCompletedTasks}>
+                Remove completed
+            </Button>
         </div>
     );
 };

@@ -1,4 +1,6 @@
+import { Button } from '../button/button';
 import { ChangeEvent, memo, useState } from 'react';
+
 import s from './add-item-form.module.css';
 
 type Props = {
@@ -39,13 +41,13 @@ export const AddItemForm = memo(function AddItemForm(props: Props) {
                 className={s.input}
             />
             {errorText && <p>{errorText}</p>}
-            <button
+            <Button
                 className={s.button}
                 disabled={!!errorText}
                 onClick={handleAdditem}
             >
                 add
-            </button>
+            </Button>
         </div>
     );
 });

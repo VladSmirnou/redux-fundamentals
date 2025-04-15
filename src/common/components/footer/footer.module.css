@@ -1,5 +1,19 @@
 .footer {
-    display: flex;
-    background: white;
-    border-top: 2px solid rgb(231, 231, 231);
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    /* gap: 15px; */
+    border: 1px solid black;
+    border-radius: 10px;
+}
+
+.footer > div {
+    padding: 10px;
+    display: grid;
+}
+
+.footer > div:nth-child(n + 2) {
+    border-left: 1px solid black;
+}
+
+.footer > div > :last-child {
 }

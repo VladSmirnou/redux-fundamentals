@@ -1,0 +1,29 @@
+* {
+    margin: 0px;
+    box-sizing: border-box;
+}
+
+:root {
+    --text-site: white;
+    --color-site: rgb(145, 78, 208);
+    --color-hover: rgb(113, 52, 171);
+    --color-disabled: rgb(176, 122, 227);
+
+    --transition-fast: 0.15s;
+    --transition-normal: 0.3s;
+}
+
+ul {
+    padding: 0;
+    list-style: none;
+}
+
+html {
+    background-color: rgb(244, 244, 244);
+}
+
+h1,
+h2,
+h3 {
+    text-align: center;
+}

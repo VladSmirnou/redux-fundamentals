@@ -1,0 +1,35 @@
+.task {
+    display: flex;
+    padding: 15px 0;
+    align-items: center;
+}
+
+.task:not(:first-of-type) {
+    border-top: 1px solid var(--color-site);
+}
+
+.toggle_active_checkbox {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+    flex-shrink: 0;
+}
+
+.title {
+    overflow: hidden;
+    margin-right: 10px;
+    text-overflow: ellipsis;
+}
+
+.delete_button {
+    background-color: rgb(219, 21, 21);
+    flex-shrink: 0;
+}
+
+.delete_button:hover {
+    background-color: rgb(163, 17, 17);
+}
+
+.delete_button:disabled {
+    background-color: rgb(188, 114, 114);
+}

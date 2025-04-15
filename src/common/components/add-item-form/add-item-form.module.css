@@ -1,13 +1,33 @@
 .wrapper {
-    display: flex;
-    margin-bottom: 20px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-auto-rows: 1fr;
+    gap: 10px 20px;
 }
 
 .input {
-    flex: 1;
     padding: 15px;
+    border: 1px solid var(--color-site);
+    border-radius: 5px;
+    outline: 2px solid transparent;
+    font-size: 20px;
+}
+
+.input:focus {
+    outline-offset: -2px;
+    outline-color: var(--color-hover);
+    transition: outline-color var(--transition-fast);
 }
 
 .button {
-    margin-left: 20px;
+    width: 150px;
+}
+
+@media only screen and (max-width: 576px) {
+    .wrapper {
+        grid-template-columns: 1fr;
+    }
+    .button {
+        width: 100%;
+    }
 }

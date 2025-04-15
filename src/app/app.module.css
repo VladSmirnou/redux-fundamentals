@@ -1,4 +1,24 @@
-.wrapper {
-    max-width: 700px;
-    margin: 0 auto;
+.todo_section {
+    margin-top: 20px;
+}
+
+.todolist_wrapper {
+    margin: 0 100px;
+    font-size: 22px;
+}
+
+.title {
+    color: brown;
+    font-size: 40px;
+    margin-bottom: 20px;
+}
+
+@media only screen and (max-width: 768px) {
+    .todolist_wrapper {
+        margin: 0;
+    }
+
+    .title {
+        font-size: 32px;
+    }
 }

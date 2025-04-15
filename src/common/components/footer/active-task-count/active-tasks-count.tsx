@@ -12,11 +12,8 @@ export const ActiveTasksCount = () => {
     const activeTasksCount = useAppSelector(selectActiveTasksCount);
     const singularOrPlural = activeTasksCount === 1 ? 'task' : 'tasks';
     return (
-        <div>
-            <h3>Remaining todos</h3>
-            <p>
-                {activeTasksCount} {singularOrPlural} left
-            </p>
-        </div>
+        <p>
+            {activeTasksCount} {singularOrPlural} left
+        </p>
     );
 };

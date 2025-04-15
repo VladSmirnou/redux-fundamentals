@@ -1,9 +1,8 @@
-import { AddItemForm } from '@/common/components/add-item-form/add-item-form';
-import { FilterByStatusValues } from '../../../common/types';
-import { Tasks } from './tasks/tasks';
-import { addTask } from '@/features/model/tasksSlice';
-import { useAppDispatch } from '@/common/hooks/use-app-dispatch';
-import s from './todolist.module.css';
+import { useAppSelector } from '@/common/hooks/use-app-selector';
+import { FilterByStatusValues, type Task as TaskType } from '@/common/types';
+import { shallowEqual } from 'react-redux';
+import { Task } from './task/Task';
+import styles from './todolist.module.css';
 
 type Props = {
     filterByStatusValue: FilterByStatusValues;
@@ -11,20 +10,56 @@ type Props = {
     filterByColorTagValues: Array<string>;
 };
 
-export const Todolist = (props: Props) => {
-    const dispatch = useAppDispatch();
+const selectTaskIds = (
+    tasksObj: { [key: string]: TaskType },
+    filterValue: FilterByStatusValues,
+    selectedColorTags: Array<string>,
+) => {
+    let tasks = Object.entries(tasksObj);
+    if (filterValue !== 'all') {
+        tasks = tasks.filter(([, task]) => {
+            if (task.isDone && filterValue === 'completed') {
+                return true;
+            }
+            if (!task.isDone && filterValue === 'active') {
+                return true;
+            }
+            return false;
+        });
+    }
+    if (selectedColorTags.length) {
+        tasks = tasks.filter(([, task]) => {
+            const colorTag = task.colorTag;
+            if (colorTag) {
+                return selectedColorTags.includes(colorTag);
+            }
+            return;
+        });
+    }
+    return tasks.map(([taskId]) => +taskId).reverse();
+};
 
-    const addTaskHandler = (taskTitle: string) => {
-        dispatch(addTask(taskTitle));
-    };
+export const Todolist = (props: Props) => {
+    const { filterByStatusValue, colorTags, filterByColorTagValues } = props;
+    const taskIds = useAppSelector(
+        (state) =>
+            selectTaskIds(
+                state.entities,
+                filterByStatusValue,
+                filterByColorTagValues,
+            ),
+        shallowEqual,
+    );
+
+    const JSXTasks = taskIds.map((taskId) => {
+        return <Task key={taskId} taskId={taskId} colorTags={colorTags} />;
+    });
 
     return (
-        <div>
-            <h2 className={s.title}>Todos</h2>
-            <div className={s.wrapper}>
-                <AddItemForm onAddItem={addTaskHandler} />
-                <Tasks {...props} />
-            </div>
+        <div className={styles.tasks}>
+            {JSXTasks.length ?
+                <ul>{JSXTasks}</ul>
+            :   <p>You dont have any tasks</p>}
         </div>
     );
 };

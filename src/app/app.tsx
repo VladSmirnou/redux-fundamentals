@@ -1,12 +1,18 @@
-import { Container } from '@/common/components/container/container';
+import { AddItemForm } from '@/common/components/add-item-form/add-item-form';
 import { Footer } from '@/common/components/footer/footer';
 import { Header } from '@/common/components/header/header';
 import { FilterByStatusValues, FilterColorTagValues } from '@/common/types';
 import { Todolist } from '@/features/ui/todolist/todolist';
 import { useState } from 'react';
+import { Container } from '@/common/components/container/container';
+import { useAppDispatch } from '@/common/hooks/use-app-dispatch';
+import { addTask } from '@/features/model/tasksSlice';
+
 import s from './app.module.css';
 
 function App() {
+    const dispatch = useAppDispatch();
+
     const [filterByStatusValue, setFilterByStatusValue] =
         useState<FilterByStatusValues>('all');
 
@@ -41,27 +47,38 @@ function App() {
         }
         return selectedColorTags;
     }, [] as Array<string>);
+    const addTaskHandler = (taskTitle: string) => {
+        dispatch(addTask(taskTitle));
+    };
 
     return (
-        <Container>
+        <div>
             <Header />
-            <div className={s.wrapper}>
-                <Todolist
-                    colorTags={colorTags}
-                    filterByColorTagValues={selectedColorTagValues}
-                    filterByStatusValue={filterByStatusValue}
-                />
-                <Footer
-                    colorTags={colorTags}
-                    selectedColorTags={selectedColorTagValues}
-                    filterByStatusValue={filterByStatusValue}
-                    onSetFilterByStatusValue={setFilterByStatusValueHandler}
-                    onSetFilterByColorTagValues={
-                        setFilterByColorTagValuesHandler
-                    }
-                />
-            </div>
-        </Container>
+            <section className={s.todo_section}>
+                <Container>
+                    <div className={s.todolist_wrapper}>
+                        <h2 className={s.title}>Todos</h2>
+                        <AddItemForm onAddItem={addTaskHandler} />
+                        <Todolist
+                            colorTags={colorTags}
+                            filterByColorTagValues={selectedColorTagValues}
+                            filterByStatusValue={filterByStatusValue}
+                        />
+                        <Footer
+                            colorTags={colorTags}
+                            selectedColorTags={selectedColorTagValues}
+                            filterByStatusValue={filterByStatusValue}
+                            onSetFilterByStatusValue={
+                                setFilterByStatusValueHandler
+                            }
+                            onSetFilterByColorTagValues={
+                                setFilterByColorTagValuesHandler
+                            }
+                        />
+                    </div>
+                </Container>
+            </section>
+        </div>
     );
 }
 

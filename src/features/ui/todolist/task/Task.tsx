@@ -1,3 +1,4 @@
+import { Button } from '@/common/components/button/button';
 import { ChangeEvent } from 'react';
 import { singleSelectorWrapper } from './single-selector/singleSelectorWrapper';
 import { selectById } from '@/app/selectors';
@@ -9,6 +10,7 @@ import {
     setTaskColorTag,
 } from '@/features/model/tasksSlice';
 import { ColorSelector } from './color-selector/color-selector';
+
 import s from './task.module.css';
 
 type Props = {
@@ -45,20 +47,23 @@ export const Task = (props: Props) => {
     return (
         <li className={s.task}>
             <input
+                className={s.toggle_active_checkbox}
                 type="checkbox"
                 checked={isDone}
                 onChange={handleUpdateTaskStatus}
             />
-            <span>{title}</span>
+            <span className={s.title}>{title}</span>
             <ColorSelector
                 colorTags={colorTags}
-                defaulOptionText={'color tag (None)'}
+                defaulOptionText={'color'}
                 render={singleSelectorWrapper({
                     selectedColorTag: colorTag,
                     onSetColorTag: setColorTag,
                 })}
             />
-            <button onClick={deleteTask}>X</button>
+            <Button className={s.delete_button} onClick={deleteTask}>
+                X
+            </Button>
         </li>
     );
 };
