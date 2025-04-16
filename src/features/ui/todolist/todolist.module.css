@@ -1,6 +1,10 @@
 .tasks {
+    box-sizing: content-box;
+    padding: 0 5px;
+    width: 100%;
+    transform: translateX(-5px);
     margin: 20px 0;
-    max-height: 251px;
+    max-height: 263px;
     overflow: auto;
 }
 

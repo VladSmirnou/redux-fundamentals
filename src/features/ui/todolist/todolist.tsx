@@ -2,8 +2,9 @@ import { useAppSelector } from '@/common/hooks/use-app-selector';
 import { FilterByStatusValues, type Task as TaskType } from '@/common/types';
 import { shallowEqual } from 'react-redux';
 import { Task } from './task/Task';
-import styles from './todolist.module.css';
 import type { TodolistProps } from './types';
+
+import styles from './todolist.module.css';
 
 const selectTaskIds = (
     tasksObj: { [key: string]: TaskType },
