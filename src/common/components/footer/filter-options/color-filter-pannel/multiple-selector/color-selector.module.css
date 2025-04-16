@@ -1,0 +1,15 @@
+.selector {
+    font-size: 20px;
+    width: 100%;
+    outline: 2px solid transparent;
+    overflow: auto;
+    border: 1px solid var(--elems-theme-color);
+    border-radius: 3px;
+}
+
+.selector:hover,
+.selector:focus {
+    cursor: pointer;
+    outline-color: var(--color-hover);
+    transition: outline-color var(--transition-fast);
+}

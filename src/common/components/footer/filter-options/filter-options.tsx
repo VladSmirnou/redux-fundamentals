@@ -1,10 +1,19 @@
 import { FilterByStatusValues } from '../../../types';
+import { Button } from '../../button/button';
+
+import cn from 'classnames';
 import s from './filter-options.module.css';
 
 type Props = {
     filterByStatusValue: FilterByStatusValues;
     onSetFilterByStatusValue: (value: FilterByStatusValues) => void;
 };
+
+const filterByStatusOptions: Array<FilterByStatusValues> = [
+    'all',
+    'active',
+    'completed',
+];
 
 export const FilterOptions = (props: Props) => {
     const { filterByStatusValue, onSetFilterByStatusValue } = props;
@@ -16,7 +25,21 @@ export const FilterOptions = (props: Props) => {
     return (
         <div>
             <div className={s.buttonContainer}>
-                <button
+                {filterByStatusOptions.map((option) => {
+                    return (
+                        <Button
+                            className={cn(s.button, {
+                                [s.active_option]:
+                                    filterByStatusValue === option,
+                            })}
+                            key={option}
+                            onClick={() => handleSetFilterByStatusValue(option)}
+                        >
+                            {option}
+                        </Button>
+                    );
+                })}
+                {/* <button
                     style={{
                         backgroundColor:
                             filterByStatusValue === 'all' ? 'aquamarine' : (
@@ -47,7 +70,7 @@ export const FilterOptions = (props: Props) => {
                     onClick={() => handleSetFilterByStatusValue('completed')}
                 >
                     completed
-                </button>
+                </button> */}
             </div>
         </div>
     );

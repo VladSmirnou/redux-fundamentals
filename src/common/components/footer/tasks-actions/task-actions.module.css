@@ -1,7 +1,9 @@
-.complete_all_button {
-    margin-bottom: 5px;
-}
-
 .buttons_wrapper {
     align-self: end;
+    display: grid;
+    row-gap: 5px;
+}
+
+.button {
+    width: 100%;
 }

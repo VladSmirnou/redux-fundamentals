@@ -1,12 +1,16 @@
 .button {
     border: none;
-    background-color: var(--color-site);
-    color: var(--text-site);
+    background-color: var(--elems-theme-color);
+    color: var(--text-theme-color);
     padding: 5px 10px;
     border-radius: 5px;
-    transition: background-color var(--transition-normal);
     cursor: pointer;
     font-size: 18px;
+    outline: 2px solid transparent;
+    outline-offset: 1px;
+    transition:
+        var(--transition-fast) outline-color,
+        background-color var(--transition-normal);
 }
 
 .button:hover {
@@ -16,4 +20,8 @@
 .button:disabled {
     background-color: var(--color-disabled);
     cursor: not-allowed;
+}
+
+.button:focus-visible {
+    outline-color: var(--elems-theme-color);
 }

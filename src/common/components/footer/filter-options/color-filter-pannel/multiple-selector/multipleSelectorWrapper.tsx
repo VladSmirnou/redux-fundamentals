@@ -1,4 +1,5 @@
 import { ChangeEvent } from 'react';
+import styles from './color-selector.module.css';
 
 type Kwargs = {
     selectedColorTags: Array<string>;
@@ -22,6 +23,7 @@ export const multipleSelectorWrapper = (kwargs: Kwargs) => {
         };
         return (
             <select
+                className={styles.selector}
                 multiple={true}
                 value={selectedColorTags}
                 onChange={handleSetFilterByColorTagValues}

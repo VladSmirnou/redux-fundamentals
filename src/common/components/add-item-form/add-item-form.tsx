@@ -1,6 +1,6 @@
 import { Button } from '../button/button';
 import { ChangeEvent, memo, useState } from 'react';
-
+import cn from 'classnames';
 import s from './add-item-form.module.css';
 
 type Props = {
@@ -17,7 +17,7 @@ export const AddItemForm = memo(function AddItemForm(props: Props) {
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         const nextInputText = e.target.value;
         if (nextInputText.length > 20) {
-            setErrorText('title cannot be larger than 20 characters');
+            setErrorText('Title cannot be larger than 20 characters');
         } else {
             if (errorText) {
                 setErrorText('');
@@ -27,12 +27,16 @@ export const AddItemForm = memo(function AddItemForm(props: Props) {
     };
 
     const handleAdditem = () => {
+        if (!inputText) {
+            setErrorText('Title cannot be empty');
+            return;
+        }
         onAddItem(inputText);
         setInputText('');
     };
 
     return (
-        <div className={s.wrapper + ' ' + className}>
+        <div className={cn(s.wrapper, className)}>
             <input
                 type="text"
                 value={inputText}
@@ -40,7 +44,7 @@ export const AddItemForm = memo(function AddItemForm(props: Props) {
                 placeholder="What needs to be done?"
                 className={s.input}
             />
-            {errorText && <p>{errorText}</p>}
+            {errorText && <p className={s.error}>{errorText}</p>}
             <Button
                 className={s.button}
                 disabled={!!errorText}

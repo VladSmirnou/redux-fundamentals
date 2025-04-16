@@ -1,0 +1,31 @@
+.title {
+    font-size: 22px;
+    margin-bottom: 10px;
+}
+
+.widget {
+    display: grid;
+    grid-template-rows: auto 1fr;
+    padding: 10px;
+}
+
+.content {
+    align-self: end;
+}
+
+.widget:nth-child(n + 2) {
+    border-left: 1px solid black;
+}
+
+@media only screen and (max-width: 576px) {
+    .widget:nth-child(n + 2) {
+        border-left: none;
+    }
+    .widget:nth-child(2n + 2) {
+        border-left: 1px solid black;
+    }
+
+    .widget:nth-child(n + 3) {
+        border-top: 1px solid black;
+    }
+}

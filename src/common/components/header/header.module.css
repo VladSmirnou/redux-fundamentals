@@ -1,6 +1,6 @@
 .header {
-    background-color: var(--color-site);
-    color: var(--text-site);
+    background-color: var(--elems-theme-color);
+    color: var(--text-theme-color);
 }
 
 .title {

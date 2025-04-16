@@ -1,0 +1,22 @@
+.option {
+    cursor: pointer;
+    background-color: transparent;
+}
+
+.option:hover {
+    background-color: var(--elems-theme-color);
+    color: var(--text-theme-color);
+}
+
+.option::checkmark {
+    display: none;
+}
+
+.option:checked {
+    background: var(--elems-theme-color);
+    color: var(--text-theme-color);
+}
+
+.option:checked:hover {
+    background-color: var(--color-hover);
+}

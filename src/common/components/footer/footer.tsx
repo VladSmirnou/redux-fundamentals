@@ -1,10 +1,12 @@
+import type { ReactNode } from 'react';
+import { FilterByStatusValues } from '../../types';
 import { ActiveTasksCount } from './active-task-count/active-tasks-count';
+import { ColorFilterPannel } from './filter-options/color-filter-pannel/color-filter-pannel';
 import { FilterOptions } from './filter-options/filter-options';
 import { TasksActions } from './tasks-actions/tasks-actions';
-import { FilterByStatusValues } from '../../types';
+import { FooterWidget } from './footer-widget/footer-widget';
+
 import s from './footer.module.css';
-import type { PropsWithChildren, ReactNode } from 'react';
-import { ColorFilterPannel } from './filter-options/color-filter-pannel/color-filter-pannel';
 
 type Props = {
     colorTags: Array<string>;
@@ -14,23 +16,12 @@ type Props = {
     onSetFilterByColorTagValues: (filterValueTags: Set<string>) => void;
 };
 
-type FooterWidgetProps = PropsWithChildren & {
-    title: string;
-};
-
-const FooterWidget = (props: FooterWidgetProps) => {
-    const { title, children } = props;
-    return (
-        <div>
-            <h3>{title}</h3>
-            {children}
-        </div>
-    );
-};
-
-type FooterWidget = {
+type FooterWidgetData = {
     title: string;
     content: ReactNode;
+    modifierClasses?: {
+        content?: string;
+    };
 };
 
 export const Footer = (props: Props) => {
@@ -42,10 +33,13 @@ export const Footer = (props: Props) => {
         selectedColorTags,
     } = props;
 
-    const footerWidgets: Array<FooterWidget> = [
+    const footerWidgets: Array<FooterWidgetData> = [
         {
             title: 'Remaining todos',
             content: <ActiveTasksCount />,
+            modifierClasses: {
+                content: s.active_task_count,
+            },
         },
         {
             title: 'Actions',
@@ -74,9 +68,13 @@ export const Footer = (props: Props) => {
 
     return (
         <div className={s.footer}>
-            {footerWidgets.map(({ title, content }) => {
+            {footerWidgets.map(({ title, content, modifierClasses }) => {
                 return (
-                    <FooterWidget key={title} title={title}>
+                    <FooterWidget
+                        modifierClasses={modifierClasses}
+                        key={title}
+                        title={title}
+                    >
                         {content}
                     </FooterWidget>
                 );

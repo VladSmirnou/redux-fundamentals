@@ -4,10 +4,12 @@
 }
 
 :root {
-    --text-site: white;
-    --color-site: rgb(145, 78, 208);
+    --text-theme-color: white;
+    --elems-theme-color: rgb(145, 78, 208);
     --color-hover: rgb(113, 52, 171);
     --color-disabled: rgb(176, 122, 227);
+
+    --scroll-track: rgb(204, 176, 229);
 
     --transition-fast: 0.15s;
     --transition-normal: 0.3s;

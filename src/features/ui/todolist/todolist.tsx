@@ -59,7 +59,8 @@ export const Todolist = (props: Props) => {
         <div className={styles.tasks}>
             {JSXTasks.length ?
                 <ul>{JSXTasks}</ul>
-            :   <p>You dont have any tasks</p>}
+            :   <p className={styles.no_tasks_hint}>You dont have any tasks!</p>
+            }
         </div>
     );
 };

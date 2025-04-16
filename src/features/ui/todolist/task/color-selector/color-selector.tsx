@@ -1,6 +1,8 @@
 import { DEFAULT_OPTION_VALUE } from '@/common/constants';
 import { ReactElement } from 'react';
 
+import styles from './color-selector.module.css';
+
 type Props = {
     colorTags: Array<string>;
     defaulOptionText: string;
@@ -13,7 +15,11 @@ export const ColorSelector = (props: Props) => {
     const JSXColorSelectOptions: Array<JSX.Element> = [];
 
     const defaultOption = (
-        <option key={DEFAULT_OPTION_VALUE} value={DEFAULT_OPTION_VALUE}>
+        <option
+            className={styles.option}
+            key={DEFAULT_OPTION_VALUE}
+            value={DEFAULT_OPTION_VALUE}
+        >
             {defaulOptionText}
         </option>
     );
@@ -22,7 +28,7 @@ export const ColorSelector = (props: Props) => {
 
     colorTags.forEach((colorTag) => {
         JSXColorSelectOptions.push(
-            <option key={colorTag} value={colorTag}>
+            <option className={styles.option} key={colorTag} value={colorTag}>
                 {colorTag}
             </option>,
         );

@@ -5,14 +5,36 @@
 }
 
 .task:not(:first-of-type) {
-    border-top: 1px solid var(--color-site);
+    border-top: 1px solid var(--elems-theme-color);
 }
 
 .toggle_active_checkbox {
+    -webkit-appearance: none;
+    appearance: none;
+    cursor: pointer;
     width: 20px;
     height: 20px;
     margin-right: 10px;
     flex-shrink: 0;
+    border: 1px solid var(--elems-theme-color);
+    border-radius: 2px;
+    background-color: transparent;
+    padding: 1px;
+    transition: 0.1s background-color;
+    background-clip: content-box;
+    outline: 2px solid transparent;
+    outline-offset: -1px;
+    transition:
+        var(--transition-fast) outline-color,
+        var(--transition-fast) background-color;
+}
+
+.toggle_active_checkbox:focus-visible {
+    outline-color: var(--elems-theme-color);
+}
+
+.toggle_active_checkbox:checked {
+    background-color: var(--elems-theme-color);
 }
 
 .title {

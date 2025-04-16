@@ -47,6 +47,7 @@ function App() {
         }
         return selectedColorTags;
     }, [] as Array<string>);
+
     const addTaskHandler = (taskTitle: string) => {
         dispatch(addTask(taskTitle));
     };

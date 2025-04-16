@@ -20,12 +20,15 @@ export const TasksActions = () => {
     return (
         <div className={styles.buttons_wrapper}>
             <Button
-                className={styles.complete_all_button}
+                className={styles.button}
                 onClick={handleMarkAllTasksAsCompleted}
             >
                 Complete all
             </Button>
-            <Button onClick={handleRemoveCompletedTasks}>
+            <Button
+                className={styles.button}
+                onClick={handleRemoveCompletedTasks}
+            >
                 Remove completed
             </Button>
         </div>
