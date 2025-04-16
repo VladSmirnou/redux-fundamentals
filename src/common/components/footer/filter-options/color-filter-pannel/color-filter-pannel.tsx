@@ -1,13 +1,8 @@
 import { ColorSelector } from '@/features/ui/todolist/task/color-selector/color-selector';
 import { multipleSelectorWrapper } from './multiple-selector/multipleSelectorWrapper';
+import type { ColorFilterPannelProps } from './types';
 
-type Props = {
-    colorTags: Array<string>;
-    selectedColorTags: Array<string>;
-    onSetFilterByColorTagValues: (filterValueTags: Set<string>) => void;
-};
-
-export const ColorFilterPannel = (props: Props) => {
+export const ColorFilterPannel = (props: ColorFilterPannelProps) => {
     const { colorTags, ...rest } = props;
     return (
         <ColorSelector

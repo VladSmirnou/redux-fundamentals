@@ -8,7 +8,7 @@ import { Container } from '@/common/components/container/container';
 import { useAppDispatch } from '@/common/hooks/use-app-dispatch';
 import { addTask } from '@/features/model/tasksSlice';
 
-import s from './app.module.css';
+import styles from './app.module.css';
 
 function App() {
     const dispatch = useAppDispatch();
@@ -55,10 +55,10 @@ function App() {
     return (
         <div>
             <Header />
-            <section className={s.todo_section}>
+            <section className={styles.todo_section}>
                 <Container>
-                    <div className={s.todolist_wrapper}>
-                        <h2 className={s.title}>Todos</h2>
+                    <div className={styles.todolist_wrapper}>
+                        <h2 className={styles.title}>Todos</h2>
                         <AddItemForm onAddItem={addTaskHandler} />
                         <Todolist
                             colorTags={colorTags}

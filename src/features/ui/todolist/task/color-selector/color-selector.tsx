@@ -1,15 +1,9 @@
 import { DEFAULT_OPTION_VALUE } from '@/common/constants';
-import { ReactElement } from 'react';
+import type { ColorSelectorProps } from './types';
 
 import styles from './color-selector.module.css';
 
-type Props = {
-    colorTags: Array<string>;
-    defaulOptionText: string;
-    render: (JSXColorSelectOptions: Array<JSX.Element>) => ReactElement;
-};
-
-export const ColorSelector = (props: Props) => {
+export const ColorSelector = (props: ColorSelectorProps) => {
     const { colorTags, render, defaulOptionText } = props;
 
     const JSXColorSelectOptions: Array<JSX.Element> = [];

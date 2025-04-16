@@ -1,30 +1,13 @@
-import type { ReactNode } from 'react';
-import { FilterByStatusValues } from '../../types';
 import { ActiveTasksCount } from './active-task-count/active-tasks-count';
 import { ColorFilterPannel } from './filter-options/color-filter-pannel/color-filter-pannel';
 import { FilterOptions } from './filter-options/filter-options';
-import { TasksActions } from './tasks-actions/tasks-actions';
 import { FooterWidget } from './footer-widget/footer-widget';
+import { TasksActions } from './tasks-actions/tasks-actions';
+import type { FooterProps, FooterWidgetData } from './types';
 
-import s from './footer.module.css';
+import styles from './footer.module.css';
 
-type Props = {
-    colorTags: Array<string>;
-    selectedColorTags: Array<string>;
-    filterByStatusValue: FilterByStatusValues;
-    onSetFilterByStatusValue: (value: FilterByStatusValues) => void;
-    onSetFilterByColorTagValues: (filterValueTags: Set<string>) => void;
-};
-
-type FooterWidgetData = {
-    title: string;
-    content: ReactNode;
-    modifierClasses?: {
-        content?: string;
-    };
-};
-
-export const Footer = (props: Props) => {
+export const Footer = (props: FooterProps) => {
     const {
         filterByStatusValue,
         onSetFilterByStatusValue,
@@ -38,7 +21,7 @@ export const Footer = (props: Props) => {
             title: 'Remaining todos',
             content: <ActiveTasksCount />,
             modifierClasses: {
-                content: s.active_task_count,
+                content: styles.active_task_count,
             },
         },
         {
@@ -67,7 +50,7 @@ export const Footer = (props: Props) => {
     ];
 
     return (
-        <div className={s.footer}>
+        <div className={styles.footer}>
             {footerWidgets.map(({ title, content, modifierClasses }) => {
                 return (
                     <FooterWidget

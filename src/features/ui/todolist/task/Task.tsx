@@ -1,6 +1,6 @@
 import { Button } from '@/common/components/button/button';
 import { ChangeEvent } from 'react';
-import { singleSelectorWrapper } from './single-selector/singleSelectorWrapper';
+import { singleSelectorWrapper } from './single-selector/single-selector-wrapper';
 import { selectById } from '@/app/selectors';
 import { useAppDispatch } from '@/common/hooks/use-app-dispatch';
 import { useAppSelector } from '@/common/hooks/use-app-selector';
@@ -10,15 +10,11 @@ import {
     setTaskColorTag,
 } from '@/features/model/tasksSlice';
 import { ColorSelector } from './color-selector/color-selector';
+import type { TaskProps } from './types';
 
-import s from './task.module.css';
+import styles from './task.module.css';
 
-type Props = {
-    taskId: number;
-    colorTags: Array<string>;
-};
-
-export const Task = (props: Props) => {
+export const Task = (props: TaskProps) => {
     const { taskId, colorTags } = props;
 
     const dispatch = useAppDispatch();
@@ -45,14 +41,14 @@ export const Task = (props: Props) => {
     };
 
     return (
-        <li className={s.task}>
+        <li className={styles.task}>
             <input
-                className={s.toggle_active_checkbox}
+                className={styles.toggle_active_checkbox}
                 type="checkbox"
                 checked={isDone}
                 onChange={handleUpdateTaskStatus}
             />
-            <span className={s.title}>{title}</span>
+            <span className={styles.title}>{title}</span>
             <ColorSelector
                 colorTags={colorTags}
                 defaulOptionText={'color'}
@@ -61,7 +57,7 @@ export const Task = (props: Props) => {
                     onSetColorTag: setColorTag,
                 })}
             />
-            <Button className={s.delete_button} onClick={deleteTask}>
+            <Button className={styles.delete_button} onClick={deleteTask}>
                 X
             </Button>
         </li>

@@ -1,12 +1,11 @@
 import { ChangeEvent } from 'react';
+import type { MultipleSelectorWrapperKwargs } from './types';
+
 import styles from './color-selector.module.css';
 
-type Kwargs = {
-    selectedColorTags: Array<string>;
-    onSetFilterByColorTagValues: (filterValueTags: Set<string>) => void;
-};
-
-export const multipleSelectorWrapper = (kwargs: Kwargs) => {
+export const multipleSelectorWrapper = (
+    kwargs: MultipleSelectorWrapperKwargs,
+) => {
     const { selectedColorTags, onSetFilterByColorTagValues } = kwargs;
 
     return function MultipleSelector(

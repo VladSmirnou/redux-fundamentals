@@ -1,13 +1,10 @@
 import { DEFAULT_OPTION_VALUE } from '@/common/constants';
 import { ChangeEvent } from 'react';
-import s from './single-selector.module.css';
+import type { SingleSelectorKwargs } from './types';
 
-type Kwargs = {
-    selectedColorTag: string | undefined;
-    onSetColorTag: (colorTag: string | undefined) => void;
-};
+import styles from './single-selector.module.css';
 
-export const singleSelectorWrapper = (kwargs: Kwargs) => {
+export const singleSelectorWrapper = (kwargs: SingleSelectorKwargs) => {
     const { selectedColorTag, onSetColorTag } = kwargs;
 
     return function SingleSelector(JSXColorSelectOptions: Array<JSX.Element>) {
@@ -22,7 +19,7 @@ export const singleSelectorWrapper = (kwargs: Kwargs) => {
 
         return (
             <select
-                className={s.selector}
+                className={styles.selector}
                 value={selectedColorTag ?? DEFAULT_OPTION_VALUE}
                 onChange={handleSetColorTag}
             >

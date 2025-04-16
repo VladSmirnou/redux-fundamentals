@@ -3,12 +3,7 @@ import { FilterByStatusValues, type Task as TaskType } from '@/common/types';
 import { shallowEqual } from 'react-redux';
 import { Task } from './task/Task';
 import styles from './todolist.module.css';
-
-type Props = {
-    filterByStatusValue: FilterByStatusValues;
-    colorTags: Array<string>;
-    filterByColorTagValues: Array<string>;
-};
+import type { TodolistProps } from './types';
 
 const selectTaskIds = (
     tasksObj: { [key: string]: TaskType },
@@ -39,7 +34,7 @@ const selectTaskIds = (
     return tasks.map(([taskId]) => +taskId).reverse();
 };
 
-export const Todolist = (props: Props) => {
+export const Todolist = (props: TodolistProps) => {
     const { filterByStatusValue, colorTags, filterByColorTagValues } = props;
     const taskIds = useAppSelector(
         (state) =>

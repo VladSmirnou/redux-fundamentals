@@ -1,14 +1,7 @@
-import type { PropsWithChildren } from 'react';
+import type { FooterWidgetProps } from './types';
+
 import cn from 'classnames';
-
 import styles from './footer-widget.module.css';
-
-type FooterWidgetProps = PropsWithChildren & {
-    title: string;
-    modifierClasses?: {
-        content?: string;
-    };
-};
 
 export const FooterWidget = (props: FooterWidgetProps) => {
     const { title, children, modifierClasses } = props;

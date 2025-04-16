@@ -1,11 +1,12 @@
 import { Container } from '../container/container';
-import s from './header.module.css';
+
+import styles from './header.module.css';
 
 export const Header = () => {
     return (
-        <header className={s.header}>
+        <header className={styles.header}>
             <Container>
-                <h1 className={s.title}>Redux Fundamentals Example</h1>
+                <h1 className={styles.title}>Redux Fundamentals Example</h1>
             </Container>
         </header>
     );
