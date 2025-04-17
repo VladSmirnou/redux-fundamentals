@@ -1,4 +1,4 @@
-- View the live version of the project -> https://vladsmirnou.github.io/redux-fundamentals/
+View the live version of the project -> https://vladsmirnou.github.io/redux-fundamentals/
 \
 \
 or
